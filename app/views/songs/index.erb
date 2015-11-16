@@ -1,2 +1,14 @@
-hello world!
-<!-- this is my main page -->
+
+
+<% @songs.each do |song| %>
+  <div class = "song">
+    <h3>
+    <% if song.url? %>
+      <a href = "<%= song.url %>">
+    <% else %>
+      <a href = "/songs/<%= song.id %>">
+    <% end %>
+
+    <%= song.song_title %></a> <small>(by: <%= song.author %>)</small></h3>
+  </div>
+<% end %>

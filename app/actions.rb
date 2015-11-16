@@ -7,11 +7,14 @@ get '/songs/new' do
   erb :'/songs/new'
 end
 
-get '/songs/show' do
+get '/songs/:id' do
+  @song = Song.find(params[:id])
   erb :'songs/show'
+
 end
 
 get '/songs/' do
+  @songs = Song.all
   erb :'songs/index'
 end
 

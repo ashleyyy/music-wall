@@ -1,2 +1,14 @@
 <!-- this is where I will show the individual song -->
-Hello world!
+<h3>
+  Song: <%= @song.song_title %>
+</h3>
+
+<p>
+  by: <%= @song.author %>
+</p>
+
+<p>
+  <% if @song.url? %>
+    <a href ='<%= @song.url %>'><%= @song.url %></a>
+  <% end %>
+</p>
