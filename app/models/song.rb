@@ -1,6 +1,6 @@
-class Song
+class Song < ActiveRecord::Base
   validates :song_title, presence: true
-  validates :author, presence :true
+  validates :author, presence: true
   # validates :url_format if: :url
 
   # def url_format
