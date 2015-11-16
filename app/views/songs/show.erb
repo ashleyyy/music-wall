@@ -1,14 +1,20 @@
-<!-- this is where I will show the individual song -->
-<h3>
-  Song: <%= @song.song_title %>
-</h3>
+<ul class="nav nav-pills" role="tablist">
+        <li role="presentation"><a href="/new">Add New Song</a></li>
+        <li role="presentation"><a href="/">See All Songs</a></li>
+      </ul>
 
-<p>
-  by: <%= @song.author %>
-</p>
+<div class="well">
+  <h3>
+    Song: <%= @song.song_title %>
+  </h3>
 
-<p>
-  <% if @song.url? %>
-    <a href ='<%= @song.url %>'><%= @song.url %></a>
-  <% end %>
-</p>
+  <p>
+    by: <%= @song.author %>
+  </p>
+
+  <p>
+    <% if @song.url? %>
+      <a href ='<%= @song.url %>'><%= @song.url %></a>
+    <% end %>
+  </p>
+</div>

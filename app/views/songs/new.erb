@@ -1,3 +1,8 @@
+<ul class="nav nav-pills" role="tablist">
+        <li role="presentation" class="active"><a href="#">Add New Song</a></li>
+        <li role="presentation"><a href="/">See All Songs</a></li>
+      </ul>
+<p>
 <%if @song && @song.errors.any? %>
   <div>
     <strong>Some issues with your message, please fix them:</strong>
@@ -27,7 +32,8 @@
 </div>
 
 <div>
-  <input type = "submit" value = "click here">
+  <input type = "submit" class="btn btn-primary" value = "click here">
+
 </div>
 
 </form>
