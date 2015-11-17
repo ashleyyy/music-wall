@@ -1,9 +1,22 @@
-<ul class="nav nav-pills" role="tablist">
-        <li role="presentation"><a href="/login">Login</a></li>
-        <li role="presentation"><a href="/songs/new">Add New Song</a></li>
-        <li role="presentation"><a href="/songs/">Top Ten Songs</a></li>
-        <li role="presentation"><a href="/songs/">See All Songs</a></li>
-      </ul>
+<% if session[:user_id] %>
+
+  <ul class="nav nav-pills" role="tablist">
+    <li role="presentation"><a href="/logout">Logout</a></li>
+    <li role="presentation"><a href="/songs/new">Add New Song</a></li>
+    <li role="presentation"><a href="/songs/">Top Ten Songs</a></li>
+    <li role="presentation" class ="active"><a href="/songs/">See All Songs</a></li>
+  </ul>
+
+<% else %>
+
+  <ul class="nav nav-pills" role="tablist">
+    <li role="presentation"><a href="/login">Login</a></li>
+    <li role="presentation"><a href="/songs/new">Add New Song</a></li>
+    <li role="presentation"><a href="/songs/">Top Ten Songs</a></li>
+    <li role="presentation" class ="active"><a href="/songs/">See All Songs</a></li>
+  </ul>
+
+<% end %>
 
 <div class="well">
   <h3>
@@ -17,8 +30,8 @@
   <p>
     <% if @song.url? %>
       <a href ='<%= @song.url %>'><%= @song.url %></a>
+   <% end %>
 <div class = "form">
-
 
   <form method = "post" action = "/votes">
 
@@ -30,6 +43,6 @@
   <input type = "submit" class="btn btn-xs btn-primary" value = "downvote">
   </form></div>
 
-    <% end %>
+   
   </p>
 </div>

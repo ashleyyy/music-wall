@@ -63,10 +63,18 @@ post '/signup' do
       session[:user_id] = @user.id
       redirect '/songs/'
     else 
-      Errors!
+      "Errors!"
     end
 end
 
+get '/logout' do
+   if session[:user_id]
+     session.clear
+     redirect '/songs/'
+   else
+     "Errors!"
+   end
+ end
 
 
 
