@@ -10,7 +10,6 @@ end
 get '/songs/:id' do
   @song = Song.find(params[:id])
   erb :'songs/show'
-
 end
 
 get '/songs/' do
@@ -34,12 +33,41 @@ end
 #voting stuff
 post '/votes' do
   @vote = Vote.new(
-    user_id: params[:user_id],
-    song_id: params[:song_id]
+  user_id: params[:user_id],
+  song_id: params[:song_id]
   )
   if @vote.save
-    "Vote Saved"
+    redirect '/songs/'
   else
-    "Hello World"
+    "It is a Strange and Beautiful World"
   end
 end
+
+get '/login' do
+  erb :'/login'
+end
+
+post '/login' do
+  @user = User.find_by(username: params[:username], password: params[:password])
+   if @user
+     session[:user_id] = @user.id
+     redirect '/songs/'
+   else
+     Errors!
+   end
+ end
+
+post '/signup' do
+  @user = User.new(username: params[:username], email: params[:email], password: params[:password])
+    if @user.save
+      session[:user_id] = @user.id
+      redirect '/songs/'
+    else 
+      Errors!
+    end
+end
+
+
+
+
+

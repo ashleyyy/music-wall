@@ -1,17 +1,24 @@
 <ul class="nav nav-pills" role="tablist">
+        <li role="presentation"><a href="/login">Login</a></li>
         <li role="presentation"><a href="/songs/new">Add New Song</a></li>
+        <li role="presentation"><a href="/songs/">Top Ten Songs</a></li>
         <li role="presentation"><a href="/songs/">See All Songs</a></li>
       </ul>
 
 <div class="well">
   <h3>
     Song: <%= @song.song_title %><br />
-    Ranking: <%= @song.votes.count %>
+    Votes: <%= @song.votes.count %>
   </h3>
 
   <p>
     by: <%= @song.author %>
   </p>
+  <p>
+    <% if @song.url? %>
+      <a href ='<%= @song.url %>'><%= @song.url %></a>
+<div class = "form">
+
 
   <form method = "post" action = "/votes">
 
@@ -21,11 +28,8 @@
 
 
   <input type = "submit" class="btn btn-xs btn-primary" value = "downvote">
+  </form></div>
 
-
-  <p>
-    <% if @song.url? %>
-      <a href ='<%= @song.url %>'><%= @song.url %></a>
     <% end %>
   </p>
 </div>

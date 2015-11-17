@@ -1,16 +1,13 @@
 <ul class="nav nav-pills" role="tablist">
+        <li role="presentation"><a href="/login">Login</a></li>
         <li role="presentation"><a href="/songs/new">Add New Song</a></li>
+        <li role="presentation"><a href="/songs/">Top Ten Songs</a></li>
         <li role="presentation" class="active"><a href="/songs/">See All Songs</a></li>
       </ul>
 <p>
+
 <% @songs.each do |song| %>
   <div class = "song">
-    <% if song.url? %>
-      <a href = "<%= song.url %>">
-    <% else %>
-      <a href = "/songs/<%= song.id %>">
-    <% end %>
-
-    <%= song.song_title %></a> <small>(by: <%= song.author %>)</small></h3>
+    <big>(<%= song.votes.count %></big> votes)  <a href = "/songs/<%= song.id %>"><%= song.song_title %></a> <small>(by: <%= song.author %>)</small></h3>
   </div>
 <% end %>

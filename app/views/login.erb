@@ -1,0 +1,74 @@
+<div>
+  <ul class="nav nav-pills" role="tablist">
+    <li role="presentation" class ="active"><a href="/login">Login</a></li>
+    <li role="presentation"><a href="/songs/new">Add New Song</a></li>
+    <li role="presentation"><a href="/songs/">Top Ten Songs</a></li>
+    <li role="presentation"><a href="/songs/">See All Songs</a></li>
+  </ul>
+</div>
+
+<%if @user && @user.errors.any? %>
+  <div>
+  <strong>Some issues with your message, please fix them:</strong>
+    <ul>
+    <% @user.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+<p>
+
+<div class="col-sm-6">
+  <div class = "panel panel-primary">
+  <h3 class="panel-heading" style="
+    margin-top:  0;">Log In</h3>
+    <form method="post" action="/login">
+      <div class ="panel-body">
+        <div>
+          <label>User Name:</label>
+          <input type = "text" name = "username" value = "<%= @user && @user.username %>">
+        </div>
+
+        <div>
+          <label>Password:</label>
+          <input type = "password" name = "password" value = "<%= @user && @user.password %>">
+        </div>
+
+        <div>
+          <input type = "submit" class="btn btn-primary" value = "Login">
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+
+<div class="col-sm-6">
+  <div class = "panel panel-primary">
+  <h3 class="panel-heading" style="
+    margin-top:  0;">Sign Up</h3>
+    <form method="post" action="/signup">
+      <div class ="panel-body">
+        <div>
+          <label>User Name:</label>
+          <input type = "text" name = "username" value = "<%= @user && @user.username %>">
+        </div>
+
+        <div>
+          <label>Email:</label>
+          <input type = "email" name = "email" value = "<%= @user && @user.email %>">
+        </div>
+
+        <div>
+          <label>Password:</label>
+          <input type = "password" name = "password" value = "<%= @user && @user.password %>">
+        </div>
+
+        <div>
+          <input type = "submit" class="btn btn-primary" value = "Sign Up">
+        </div>
+      </div>
+    </form>
+  </div>
