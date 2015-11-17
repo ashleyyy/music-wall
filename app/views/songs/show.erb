@@ -4,7 +4,7 @@
     <li role="presentation"><a href="/logout">Logout</a></li>
     <li role="presentation"><a href="/songs/new">Add New Song</a></li>
     <li role="presentation"><a href="/songs/topten/">Top Ten Songs</a></li>
-    <li role="presentation" class ="active"><a href="/songs/">See All Songs</a></li>
+    <li role="presentation"><a href="/songs/">See All Songs</a></li>
   </ul>
 
 <% else %>
@@ -13,7 +13,7 @@
     <li role="presentation"><a href="/login">Login</a></li>
     <li role="presentation"><a href="/songs/new">Add New Song</a></li>
     <li role="presentation"><a href="/songs/topten/">Top Ten Songs</a></li>
-    <li role="presentation" class ="active"><a href="/songs/">See All Songs</a></li>
+    <li role="presentation"><a href="/songs/">See All Songs</a></li>
   </ul>
 
 <% end %>
@@ -22,6 +22,16 @@
 <%if @vote && @vote.errors.any? %>
   <div>ERROR:
       <% @vote.errors.full_messages.each do |message| %>
+        <%= message %>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<p>
+<%if @review && @review.errors.any? %>
+  <div>ERROR:
+      <% @review.errors.full_messages.each do |message| %>
         <%= message %>
       <% end %>
     </ul>
@@ -73,6 +83,18 @@
 
     </form>
   </div>
+</div>
+
+<div class ="well">
+  <% if @review.song_id %>
+
+    <% Review.where(user_id: session[:user_id]).each do |review| %>
+      <div class = "review">
+      <%= review.content %></a> <small>(by: <%= User.find_by(id: review.user_id).username %>)</small></h3>
+      </div>
+   <% end %>
+
+  <% end %>
 </div>
 
 <div class ="well">
