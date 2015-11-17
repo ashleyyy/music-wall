@@ -2,10 +2,9 @@
         <li role="presentation"><a href="/songs/new">Add New Song</a></li>
         <li role="presentation" class="active"><a href="/songs/">See All Songs</a></li>
       </ul>
-
+<p>
 <% @songs.each do |song| %>
   <div class = "song">
-    <h3>
     <% if song.url? %>
       <a href = "<%= song.url %>">
     <% else %>

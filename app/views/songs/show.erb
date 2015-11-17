@@ -1,16 +1,27 @@
 <ul class="nav nav-pills" role="tablist">
-        <li role="presentation"><a href="/new">Add New Song</a></li>
-        <li role="presentation"><a href="/">See All Songs</a></li>
+        <li role="presentation"><a href="/songs/new">Add New Song</a></li>
+        <li role="presentation"><a href="/songs/">See All Songs</a></li>
       </ul>
 
 <div class="well">
   <h3>
-    Song: <%= @song.song_title %>
+    Song: <%= @song.song_title %><br />
+    Ranking: <%= @song.votes.count %>
   </h3>
 
   <p>
     by: <%= @song.author %>
   </p>
+
+  <form method = "post" action = "/votes">
+
+  <input type="hidden" name="song_id" value="<%= @song.id %>" />
+  <input type="hidden" name="user_id" value="1" />
+  <input type = "submit" class="btn btn-xs btn-primary" value = "upvote">
+
+
+  <input type = "submit" class="btn btn-xs btn-primary" value = "downvote">
+
 
   <p>
     <% if @song.url? %>

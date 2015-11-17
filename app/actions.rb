@@ -31,3 +31,15 @@ post '/songs' do
   end
 end
 
+#voting stuff
+post '/votes' do
+  @vote = Vote.new(
+    user_id: params[:user_id],
+    song_id: params[:song_id]
+  )
+  if @vote.save
+    "Vote Saved"
+  else
+    "Hello World"
+  end
+end
