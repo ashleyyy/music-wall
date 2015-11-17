@@ -3,8 +3,8 @@
   <ul class="nav nav-pills" role="tablist">
     <li role="presentation"><a href="/logout">Logout</a></li>
     <li role="presentation"><a href="/songs/new">Add New Song</a></li>
-    <li role="presentation"><a href="/songs/topten/">Top Ten Songs</a></li>
-    <li role="presentation" class ="active"><a href="/songs/">See All Songs</a></li>
+    <li role="presentation" class ="active"><a href="/songs/topten/">Top Ten Songs</a></li>
+    <li role="presentation"><a href="/songs/">See All Songs</a></li>
   </ul>
 
 <% else %>
@@ -12,13 +12,18 @@
   <ul class="nav nav-pills" role="tablist">
     <li role="presentation"><a href="/login">Login</a></li>
     <li role="presentation"><a href="/songs/new">Add New Song</a></li>
-    <li role="presentation"><a href="/songs/topten/">Top Ten Songs</a></li>
-    <li role="presentation" class ="active"><a href="/songs/">See All Songs</a></li>
+    <li role="presentation" class ="active"><a href="/songs/topten/">Top Ten Songs</a></li>
+    <li role="presentation"><a href="/songs/">See All Songs</a></li>
   </ul>
+
+<p>
+Disagree? Log in and have your say!
+</p>
 
 <% end %>
 
 <p>
+<% @songs = Song.joins(:votes).group("votes.song_id").order("count(votes.song_id) desc").limit(10) %>
 
 <% @songs.each do |song| %>
   <div class = "song">

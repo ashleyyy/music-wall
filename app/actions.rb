@@ -7,6 +7,10 @@ get '/songs/new' do
   erb :'/songs/new'
 end
 
+get '/songs/topten/' do
+  erb :'/songs/topten'
+end
+
 get '/songs/:id' do
   @song = Song.find(params[:id])
   erb :'songs/show'
@@ -21,7 +25,8 @@ post '/songs' do
   @song = Song.new(
     song_title: params[:song_title],
     author: params[:author], 
-    url: params[:url]
+    url: params[:url],
+    user_id: params[:user_id]
   )
   if @song.save
     redirect '/songs/'
@@ -36,12 +41,15 @@ post '/votes' do
   user_id: params[:user_id],
   song_id: params[:song_id]
   )
+  # binding.pry
   if @vote.save
     redirect '/songs/'
   else
-    "It is a Strange and Beautiful World"
+    @song = Song.find(params[:song_id])
+    erb :'songs/show'
   end
 end
+
 
 get '/login' do
   erb :'/login'

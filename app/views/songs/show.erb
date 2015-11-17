@@ -3,7 +3,7 @@
   <ul class="nav nav-pills" role="tablist">
     <li role="presentation"><a href="/logout">Logout</a></li>
     <li role="presentation"><a href="/songs/new">Add New Song</a></li>
-    <li role="presentation"><a href="/songs/">Top Ten Songs</a></li>
+    <li role="presentation"><a href="/songs/topten/">Top Ten Songs</a></li>
     <li role="presentation" class ="active"><a href="/songs/">See All Songs</a></li>
   </ul>
 
@@ -12,10 +12,20 @@
   <ul class="nav nav-pills" role="tablist">
     <li role="presentation"><a href="/login">Login</a></li>
     <li role="presentation"><a href="/songs/new">Add New Song</a></li>
-    <li role="presentation"><a href="/songs/">Top Ten Songs</a></li>
+    <li role="presentation"><a href="/songs/topten/">Top Ten Songs</a></li>
     <li role="presentation" class ="active"><a href="/songs/">See All Songs</a></li>
   </ul>
 
+<% end %>
+
+<p>
+<%if @vote && @vote.errors.any? %>
+  <div>ERROR:
+      <% @vote.errors.full_messages.each do |message| %>
+        <%= message %>
+      <% end %>
+    </ul>
+  </div>
 <% end %>
 
 <div class="well">
@@ -25,7 +35,11 @@
   </h3>
 
   <p>
-    by: <%= @song.author %>
+    by: <%= @song.author %><br />
+    <% if @song.user_id %>
+    posted by: <%= User.find_by(id: @song.user_id).username %>
+
+<% end %>
   </p>
   <p>
     <% if @song.url? %>
@@ -36,7 +50,7 @@
   <form method = "post" action = "/votes">
 
   <input type="hidden" name="song_id" value="<%= @song.id %>" />
-  <input type="hidden" name="user_id" value="1" />
+  <input type="hidden" name="user_id" value="<%= session[:user_id] %>" />
   <input type = "submit" class="btn btn-xs btn-primary" value = "upvote">
 
 
@@ -46,3 +60,13 @@
    
   </p>
 </div>
+<div class ="well">
+<% if @song.user_id %>
+See all songs posted by <%= User.find_by(id: @song.user_id).username %>:
+
+<% Song.where(user_id: session[:user_id]).each do |song| %>
+  <div class = "song">
+    <big>(<%= song.votes.count %></big> votes)  <a href = "/songs/<%= song.id %>"><%= song.song_title %></a> <small>(by: <%= song.author %>)</small></h3>
+  </div>
+<% end %>
+<% end %>
