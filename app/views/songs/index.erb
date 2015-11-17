@@ -20,6 +20,8 @@
 
 <p>
 
+<% @songs = Song.joins("LEFT OUTER JOIN votes ON votes.song_id = songs.id").group("votes.song_id").order("count(votes.song_id) desc") %>
+
 <% @songs.each do |song| %>
   <div class = "song">
     <big>(<%= song.votes.count %></big> votes)  <a href = "/songs/<%= song.id %>"><%= song.song_title %></a> <small>(by: <%= song.author %>)</small></h3>

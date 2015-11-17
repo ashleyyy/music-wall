@@ -23,7 +23,7 @@ Disagree? Log in and have your say!
 <% end %>
 
 <p>
-<% @songs = Song.joins(:votes).group("votes.song_id").order("count(votes.song_id) desc").limit(10) %>
+<% @songs = Song.joins("LEFT OUTER JOIN votes ON votes.song_id = songs.id").group("votes.song_id").order("count(votes.song_id) desc").limit(10) %>
 
 <% @songs.each do |song| %>
   <div class = "song">

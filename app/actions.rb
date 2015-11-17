@@ -78,7 +78,7 @@ end
 get '/logout' do
    if session[:user_id]
      session.clear
-     redirect '/songs/'
+     redirect '/login'
    else
      "Errors!"
    end
