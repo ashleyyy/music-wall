@@ -37,36 +37,68 @@
   <p>
     by: <%= @song.author %><br />
     <% if @song.user_id %>
-    posted by: <%= User.find_by(id: @song.user_id).username %>
-
-<% end %>
+      posted by: <%= User.find_by(id: @song.user_id).username %>
+    <% end %>
   </p>
+
   <p>
     <% if @song.url? %>
       <a href ='<%= @song.url %>'><%= @song.url %></a>
-   <% end %>
-<div class = "form">
-
-  <form method = "post" action = "/votes">
-
-  <input type="hidden" name="song_id" value="<%= @song.id %>" />
-  <input type="hidden" name="user_id" value="<%= session[:user_id] %>" />
-  <input type = "submit" class="btn btn-xs btn-primary" value = "upvote">
-
-
-  <input type = "submit" class="btn btn-xs btn-primary" value = "downvote">
-  </form></div>
-
-   
+    <% end %>
   </p>
-</div>
-<div class ="well">
-<% if @song.user_id %>
-See all songs posted by <%= User.find_by(id: @song.user_id).username %>:
 
-<% Song.where(user_id: session[:user_id]).each do |song| %>
-  <div class = "song">
-    <big>(<%= song.votes.count %></big> votes)  <a href = "/songs/<%= song.id %>"><%= song.song_title %></a> <small>(by: <%= song.author %>)</small></h3>
+
+  <div class = "form">
+    <form method = "post" action = "/votes">
+
+      <input type="hidden" name="song_id" value="<%= @song.id %>" />
+      <input type="hidden" name="user_id" value="<%= session[:user_id] %>" />
+      <input type = "submit" class="btn btn-xs btn-primary" value = "upvote">
+  <!-- TODO Implement downvote -->
+      <input type = "submit" class="btn btn-xs btn-primary" value = "downvote">
+
+    </form>
   </div>
-<% end %>
-<% end %>
+</div>
+
+<div class ="well">
+
+  <div class = "form">
+    <form method = "post" action = "/reviews" id="testformid">
+
+      <input type="hidden" name="song_id" value="<%= @song.id %>" />
+      <input type="hidden" name="user_id" value="<%= session[:user_id] %>" />
+      <textarea form ="testformid" rows="5" class= "form-control" name ="content" value = "<%= @review && @review.content %>"></textarea>
+      <input type="submit" class ="btn btn-primary" value = "submit review">
+
+    </form>
+  </div>
+</div>
+
+<div class ="well">
+  <% if @song.user_id %>
+    
+    See all songs posted by <%= User.find_by(id: @song.user_id).username %>:
+
+    <% Song.where(user_id: session[:user_id]).each do |song| %>
+      <div class = "song">
+        <big>(<%= song.votes.count %></big> votes)  <a href = "/songs/<%= song.id %>"><%= song.song_title %></a> <small>(by: <%= song.author %>)</small></h3>
+      </div>
+   <% end %>
+
+  <% end %>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

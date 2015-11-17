@@ -50,6 +50,21 @@ post '/votes' do
   end
 end
 
+post '/reviews' do
+  @review = Review.new(
+  user_id: params[:user_id],
+  song_id: params[:song_id],
+  content: params[:content]
+  )
+  # binding.pry
+  if @review.save
+    redirect '/songs/'
+  else
+    @song = Song.find(params[:song_id])
+    erb :'songs/show'
+  end
+end
+
 
 get '/login' do
   erb :'/login'

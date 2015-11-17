@@ -8,7 +8,7 @@ class Review < ActiveRecord::Base
   validate :one_per_song
 
   def one_per_song
-    errors.add(:vote, "only once per song") if self.song.review.find_by(user_id: self.user_id)
+    errors.add(:review, "only once per song") if self.song.reviews.find_by(user_id: self.user_id)
   end
 
 end
