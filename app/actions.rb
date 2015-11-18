@@ -41,9 +41,9 @@ post '/votes' do
   user_id: params[:user_id],
   song_id: params[:song_id]
   )
-  # binding.pry
   if @vote.save
-    redirect '/songs/'
+    @song = Song.find(params[:song_id])
+    erb :'songs/show'
   else
     @song = Song.find(params[:song_id])
     erb :'songs/show'
@@ -56,15 +56,18 @@ post '/reviews' do
   song_id: params[:song_id],
   content: params[:content]
   )
-  # binding.pry
   if @review.save
-    redirect '/songs/'
+    redirect back
   else
-    @song = Song.find(params[:song_id])
-    erb :'songs/show'
+    redirect back
   end
 end
 
+post '/deletereview' do
+  doomedreview = Review.find_by(id: params[:review_id])
+  doomedreview.destroy if doomedreview
+  redirect back
+end
 
 get '/login' do
   erb :'/login'
