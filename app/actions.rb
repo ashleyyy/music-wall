@@ -29,7 +29,7 @@ post '/songs' do
     user_id: params[:user_id]
   )
   if @song.save
-    redirect '/songs/'
+    redirect "/songs/#{@song.id}"
   else
     erb :'songs/new'
   end
@@ -54,7 +54,8 @@ post '/reviews' do
   @review = Review.new(
   user_id: params[:user_id],
   song_id: params[:song_id],
-  content: params[:content]
+  content: params[:content],
+  rating: params[:rating]
   )
   if @review.save
     redirect back

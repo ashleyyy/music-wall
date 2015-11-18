@@ -60,11 +60,12 @@
   </div>
 </div>
 <% end %>
-<div class ="well">
-  <% unless @song.reviews.find_by(user_id: session[:user_id]) %>
+
+<% unless @song.reviews.find_by(user_id: session[:user_id]) %>
+  <div class ="well">
     <div class = "form">
       <form method = "post" action = "/reviews" id="testformid">
-
+      <label>Rate out of five stars:&nbsp;&nbsp;</label><%= erb :"songs/_stars" %>
         <input type="hidden" name="song_id" value="<%= @song.id %>" />
         <input type="hidden" name="user_id" value="<%= session[:user_id] %>" />
         <textarea form ="testformid" rows="5" class= "form-control" name ="content" value = "<%= @review && @review.content %>"></textarea>
@@ -72,8 +73,9 @@
 
       </form>
     </div>
-  <% end %>
-</div>
+  </div>
+<% end %>
+
 
 <div class ="well">
   <% if Review.find_by(song_id: @song.id) %>
@@ -81,7 +83,8 @@
     <p>
     <% Review.where(song_id: @song.id).each do |review| %>
       <div class = "review">
-      <%= review.content %></a> <small>(by: <%= User.find_by(id: review.user_id).username %> at <%= review.created_at %>)</small></h3>
+      Rating:&nbsp;<%= review.rating %>
+      <p><%= review.content %></a> <small>(by: <%= User.find_by(id: review.user_id).username %> at <%= review.created_at %>)</small></p>
         <% if review.user_id == session[:user_id] %> 
           <div class = "form">
           <form method = "post" action = "/deletereview">
@@ -90,15 +93,13 @@
           </form>
           </div>
         <% end %>
-      </div>
-   <% end %>
-
-  <% end %>
-</div>
-
-<div class ="well">
-  <% if @song.user_id %>
-    
+      <% end %>
+    </div>
+  </div>
+<% end %>
+<% if @song.user_id %>
+  <div class ="well">
+  
     <strong>See all songs posted by <%= User.find_by(id: @song.user_id).username %>:</strong>
 
     <% Song.where(user_id: session[:user_id]).each do |song| %>
@@ -106,9 +107,8 @@
         <big>(<%= song.votes.count %></big> votes)  <a href = "/songs/<%= song.id %>"><%= song.song_title %></a> <small>(by: <%= song.author %>)</small></h3>
       </div>
    <% end %>
-
-  <% end %>
-</div>
+  </div>
+<% end %>
 
 <% else %>
 
