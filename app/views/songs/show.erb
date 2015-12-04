@@ -7,26 +7,6 @@
     <li role="presentation"><a href="/songs/">See All Songs</a></li>
   </ul>
 
-<!-- <p>
-<%if @vote && @vote.errors.any? %>
-  <div>ERROR:
-      <% @vote.errors.full_messages.each do |message| %>
-        <%= message %>
-      <% end %>
-    </ul>
-  </div>
-<% end %> -->
-
-<p>
-<%if @review && @review.errors.any? %>
-  <div>ERROR:
-      <% @review.errors.full_messages.each do |message| %>
-        <%= message %>
-      <% end %>
-    </ul>
-  </div>
-<% end %>
-
 <div class="well">
   <h3>
     Song: <%= @song.song_title %><br />
@@ -47,19 +27,19 @@
   </p>
 
   <% unless @song.votes.find_by(user_id: session[:user_id]) %>
-  <div class = "form">
-    <form method = "post" action = "/votes">
+    <div class = "form">
+      <form method = "post" action = "/votes">
 
-      <input type="hidden" name="song_id" value="<%= @song.id %>" />
-      <input type="hidden" name="user_id" value="<%= session[:user_id] %>" />
-      <input type = "submit" class="btn btn-xs btn-primary" value = "upvote">
-  <!-- TODO Implement downvote -->
-      <!-- <input type = "submit" class="btn btn-xs btn-primary" value = "downvote"> -->
+        <input type="hidden" name="song_id" value="<%= @song.id %>" />
+        <input type="hidden" name="user_id" value="<%= session[:user_id] %>" />
+        <input type = "submit" class="btn btn-xs btn-primary" value = "upvote">
+    <!-- TODO Implement downvote -->
+        <!-- <input type = "submit" class="btn btn-xs btn-primary" value = "downvote"> -->
 
-    </form>
-  </div>
+      </form>
+    </div>
+  <% end %>
 </div>
-<% end %>
 
 <% unless @song.reviews.find_by(user_id: session[:user_id]) %>
   <div class ="well">
@@ -76,27 +56,8 @@
   </div>
 <% end %>
 
+<% erb :"/songs/_show_reviews" %>
 
-<div class ="well">
-  <% if Review.find_by(song_id: @song.id) %>
-    <strong>Reviews:</strong>
-    <p>
-    <% Review.where(song_id: @song.id).each do |review| %>
-      <div class = "review">
-      Rating:&nbsp;<%= review.rating %>
-      <p><%= review.content %></a> <small>(by: <%= User.find_by(id: review.user_id).username %> at <%= review.created_at %>)</small></p>
-        <% if review.user_id == session[:user_id] %> 
-          <div class = "form">
-          <form method = "post" action = "/deletereview">
-          <input type="hidden" name="review_id" value="<%= review.id %>">
-          <input type="submit" class ="btn btn-xs btn-primary" value = "delete">
-          </form>
-          </div>
-        <% end %>
-      <% end %>
-    </div>
-  </div>
-<% end %>
 <% if @song.user_id %>
   <div class ="well">
   
@@ -138,19 +99,8 @@
     <% end %>
   </p>
 
-<div class ="well">
-  <% if Review.find_by(song_id: @song.id) %>
-    <strong>Reviews:</strong>
-    <p>
-    <% Review.where(song_id: @song.id).each do |review| %>
-      <div class = "review">
-      <%= review.content %></a> <small>(by: <%= User.find_by(id: review.user_id).username %> at <%= review.created_at %>)</small></h3>
-      </div>
-   <% end %>
-   </p>
-  <p>Disagree? Sign up and have your say!</p>
-  <% end %>
-</div>
+
+
 
 <% end %>
 

@@ -1,0 +1,40 @@
+<% if session[:user_id] %>
+
+  <% if Review.find_by(song_id: @song.id) %>
+    <div class ="well">
+      <strong>Reviews:</strong>
+      <p>
+      <% Review.where(song_id: @song.id).each do |review| %>
+        <div class = "review">
+        Rating:&nbsp;<%= review.rating %>
+        <p><%= review.content %></a> <small>(by: <%= User.find_by(id: review.user_id).username %> at <%= review.created_at %>)</small></p>
+          <% if review.user_id == session[:user_id] %> 
+            <div class = "form">
+            <form method = "post" action = "/deletereview">
+            <input type="hidden" name="review_id" value="<%= review.id %>">
+            <input type="submit" class ="btn btn-xs btn-primary" value = "delete">
+            </form>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+<% else %>
+
+  <% if Review.find_by(song_id: @song.id) %>
+    <div class ="well">
+      <strong>Reviews:</strong>
+      <p>
+      <% Review.where(song_id: @song.id).each do |review| %>
+        <div class = "review">
+        <%= review.content %></a> <small>(by: <%= User.find_by(id: review.user_id).username %> at <%= review.created_at %>)</small></h3>
+        </div>
+     <% end %>
+     </p>
+    <p>Disagree? Sign up and have your say!</p>
+    </div>
+  <% end %>
+
+<% end %>
